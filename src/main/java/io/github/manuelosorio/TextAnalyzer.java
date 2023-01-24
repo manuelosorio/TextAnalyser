@@ -15,7 +15,8 @@ public class TextAnalyzer {
         }
         reader.close();
 
-        String[] words = text.toString().split("<h1>")[1] // Ignores the Text Before the title
+        String[] words = text.toString().toLowerCase()
+                    .split("<h1>")[1] // Ignores the Text Before the title
                     .split("<!--end chapter-->")[0] // Ignores the text at the end of the title
                     .replaceAll("<[^>]*>", "") // Strips away all html tags
                     .replaceAll("&(#?\\w+);", " ") // Removes all html entities
