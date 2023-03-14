@@ -1,0 +1,19 @@
+.root {
+  -fx-background-color: teal;
+  -fx-animated: true;
+  -fx-font-size: 100%;
+}
+.button {
+  -fx-background-color: #fcfcfc;
+  color: red;
+  -fx-translate-y: 100px;
+  -fx-padding: 15 35;
+  -fx-font-size: 1em;
+}
+.button:hover {
+  -fx-background-color: red;
+}
+.text-field {
+  -fx-background-color: aqua;
+  -fx-padding: 10 15;
+}
