@@ -1,19 +1,16 @@
-.root {
+.parent {
   -fx-background-color: teal;
   -fx-animated: true;
   -fx-font-size: 100%;
 }
 .button {
-  -fx-background-color: #fcfcfc;
-  color: red;
-  -fx-translate-y: 100px;
-  -fx-padding: 15 35;
-  -fx-font-size: 1em;
+  -fx-border-color: #28ffbc;
+  -fx-text-fill: #28d0bc;
 }
-.button:hover {
-  -fx-background-color: red;
-}
-.text-field {
-  -fx-background-color: aqua;
-  -fx-padding: 10 15;
-}
+/*.button:hover {*/
+/*  -fx-background-color: #0fab98;*/
+/*}*/
+/*.text-field {*/
+/*  -fx-background-color: aqua;*/
+/*  -fx-padding: 10 15;*/
+/*}*/
