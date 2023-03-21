@@ -19,7 +19,7 @@ public class TextAnalyzerGui extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainView.fxml"));
             Parent parent = fxmlLoader.load();
-            parent.getStylesheets().setAll("./style.css");
+            parent.getStylesheets().setAll("style.css");
             primaryStage.setTitle("Text Analyzer");
             primaryStage.setScene(new Scene(parent));
             primaryStage.show();

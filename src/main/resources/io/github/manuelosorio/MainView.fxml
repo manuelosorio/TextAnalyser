@@ -13,12 +13,12 @@
         </TableView>
     </center>
    <bottom>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <items>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER" styleClass="toolbar">
+<!--        <items>-->
 <!--            <TextField maxWidth="350.0" minWidth="100.0" prefWidth="220.0" />-->
 <!--            <Region prefHeight="25.0" prefWidth="200.0" />-->
             <Button onMouseClicked="#handleButtonAction" text="Get Top 20 Words" />
-        </items>
+<!--        </items>-->
       </ToolBar>
    </bottom>
 </BorderPane>

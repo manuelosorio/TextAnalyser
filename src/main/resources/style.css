@@ -1,19 +1,23 @@
-.root {
-  -fx-background-color: teal;
-  -fx-animated: true;
-  -fx-font-size: 100%;
-}
 .button {
-  -fx-background-color: #fcfcfc;
-  color: red;
-  -fx-translate-y: 100px;
-  -fx-padding: 15 35;
-  -fx-font-size: 1em;
+  -fx-background-color: none;
+  -fx-text-fill: #FF0072;
+  -fx-border-color: #FF0072;
+  -fx-border-width: 2px;
+  -fx-border-radius: 2px;
+  -fx-font-size: 14px;
+  -fx-padding: 10px 16px;
+  -fx-pref-width: 220px;
+
 }
 .button:hover {
-  -fx-background-color: red;
+  -fx-background-color: #FF0072;
+  -fx-text-fill: #fcfcfc;
 }
-.text-field {
-  -fx-background-color: aqua;
-  -fx-padding: 10 15;
+.table {
+  -fx-text-fill: #fcfcfc;}
+.toolbar {
+  -fx-padding: 20px 40px;
+}
+.row {
+  -fx-padding: 15px 40px;
 }

@@ -3,6 +3,8 @@ package io.github.manuelosorio.controllers;
 import io.github.manuelosorio.TextAnalyzerCore;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -22,7 +24,7 @@ public class MainController implements Initializable {
     private TableColumn<DataModel, String> wordColumn;
     @FXML
     private TableColumn<DataModel, Integer> frequencyColumn;
-//    private ObservableList<DataModel> data;
+    private ObservableList<DataModel> data;
 
     public MainController() {
     }
@@ -51,8 +53,8 @@ public class MainController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        this.data = FXCollections.observableArrayList();
-//        this.tableView.setItems(data);
+        this.data = FXCollections.observableArrayList();
+        this.tableView.setItems(data);
         this.wordColumn.setCellValueFactory(new PropertyValueFactory<>("Word"));
         this.frequencyColumn.setCellValueFactory(new PropertyValueFactory<>("Frequency"));
     }
