@@ -1,0 +1,49 @@
+package io.github.manuelosorio;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.*;
+
+public class TextAnalyzerCore {
+
+    private List<Map.Entry<String, Integer>> sortedList;
+    public TextAnalyzerCore(String webUrl) throws Exception {
+        URL url = new URL(webUrl);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        StringBuilder text = new StringBuilder();
+        for (String line; (line = reader.readLine()) != null;) {
+            text.append(line).append("\n");
+        }
+        reader.close();
+
+        String[] words = this.strip(text);
+
+
+
+        HashMap<String, Integer> wordCount = new HashMap<>();
+        for (String word : words) {
+            wordCount.merge(word, 1, Integer::sum);
+        }
+        this.sortedList = new ArrayList<>(wordCount.entrySet());
+        this.sortedList.sort((a, b) -> b.getValue().compareTo(a.getValue()));
+
+    }
+
+    private String[] strip(StringBuilder text) {
+        String[] words = text.toString().toLowerCase()
+                .split("<h1>")[1] // Ignores the Text Before the title
+                .split("<!--end chapter-->")[0] // Ignores the text at the end of the title
+                .replaceAll("<[^>]*>", "") // Strips away all html tags
+                .replaceAll("&(#?\\w+);", " ") // Removes all html entities
+                .replaceAll("[^a-zA-Z0-9\\s']+", "")
+                .replaceAll("\n", " ") // This ensures the string is all
+                // in the same line preventing possible issues.
+                .split("\\s+");
+        return words;
+    }
+    public List<Map.Entry<String, Integer>> getSortedList() {
+        return sortedList;
+    }
+
+}
