@@ -8,8 +8,15 @@ import java.util.*;
 public class TextAnalyzerCore {
 
     private List<Map.Entry<String, Integer>> sortedList;
+
+    private String[] words;
     public TextAnalyzerCore(String webUrl) throws Exception {
-        URL url = new URL(webUrl);
+        this.readWebPage(webUrl);
+
+    }
+    public TextAnalyzerCore() {}
+    private void readWebPage(String webURL) throws Exception {
+        URL url = new URL(webURL);
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
         StringBuilder text = new StringBuilder();
         for (String line; (line = reader.readLine()) != null;) {
@@ -17,21 +24,13 @@ public class TextAnalyzerCore {
         }
         reader.close();
 
-        String[] words = this.strip(text);
+        this.words = this.strip(text);
 
-
-
-        HashMap<String, Integer> wordCount = new HashMap<>();
-        for (String word : words) {
-            wordCount.merge(word, 1, Integer::sum);
-        }
-        this.sortedList = new ArrayList<>(wordCount.entrySet());
-        this.sortedList.sort((a, b) -> b.getValue().compareTo(a.getValue()));
-
+        this.setSortedList();
     }
 
     private String[] strip(StringBuilder text) {
-        String[] words = text.toString().toLowerCase()
+        this.words = text.toString().toLowerCase()
                 .split("<h1>")[1] // Ignores the Text Before the title
                 .split("<!--end chapter-->")[0] // Ignores the text at the end of the title
                 .replaceAll("<[^>]*>", "") // Strips away all html tags
@@ -42,8 +41,21 @@ public class TextAnalyzerCore {
                 .split("\\s+");
         return words;
     }
+
+    private void setSortedList() {
+        HashMap<String, Integer> wordCount = new HashMap<>();
+        for (String word : this.words) {
+            wordCount.merge(word, 1, Integer::sum);
+        }
+        this.sortedList = new ArrayList<>(wordCount.entrySet());
+        this.sortedList.sort((a, b) -> b.getValue().compareTo(a.getValue()));
+    }
     public List<Map.Entry<String, Integer>> getSortedList() {
         return sortedList;
+    }
+
+    public void setUrl(String webUrl) throws Exception {
+        this.readWebPage(webUrl);
     }
 
 }
