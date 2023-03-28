@@ -50,6 +50,10 @@ public class TextAnalyzerCore {
         this.sortedList = new ArrayList<>(wordCount.entrySet());
         this.sortedList.sort((a, b) -> b.getValue().compareTo(a.getValue()));
     }
+
+    public List<Map.Entry<String, Integer>> getTopListEntities(int limit) {
+        return this.sortedList.subList(0, limit);
+    }
     public List<Map.Entry<String, Integer>> getSortedList() {
         return sortedList;
     }
