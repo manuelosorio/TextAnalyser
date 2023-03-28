@@ -63,11 +63,6 @@
         </plugins>
     </build>
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.kordamp.bootstrapfx</groupId>-->
-<!--            <artifactId>bootstrapfx-core</artifactId>-->
-<!--            <version>0.4.0</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -87,6 +82,12 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-web</artifactId>
             <version>19.0.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <properties>
