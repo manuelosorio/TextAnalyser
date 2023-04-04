@@ -5,11 +5,22 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * This class handles the core functionality for the Text Analyzer application.
+ * It will read the text from a web page and analyze it.
+ * @see TextAnalyzerGui
+ */
 public class TextAnalyzerCore {
 
     private List<Map.Entry<String, Integer>> sortedList;
 
     private String[] words;
+
+    /**
+     * This is the constructor for the TextAnalyzerCore class.
+     * @param webUrl The url to read the text from.
+     * @throws Exception
+     */
     public TextAnalyzerCore(String webUrl) throws Exception {
         this.readWebPage(webUrl);
 

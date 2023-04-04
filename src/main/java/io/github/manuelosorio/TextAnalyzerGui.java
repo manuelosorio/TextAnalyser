@@ -8,12 +8,20 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * This is the main class for the Text Analyzer application.
+ * It will launch the GUI.
+ */
 public class TextAnalyzerGui extends Application {
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * This method is called by the JavaFX runtime when the application is ready to start.
+     * @param primaryStage The primary stage for this application.
+     */
     @Override
     public void start(Stage primaryStage) {
         try {

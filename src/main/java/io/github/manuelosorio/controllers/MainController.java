@@ -16,6 +16,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * This is the controller for the MainView.fxml file.
+ * It will handle the button action and load the table.
+ * @see TextAnalyzerCore
+ * @see DataModel
+ */
 
 public class MainController implements Initializable {
     @FXML
@@ -29,6 +35,10 @@ public class MainController implements Initializable {
     public MainController() {
     }
 
+    /**
+     * This method is called by the FXMLLoader when initialization is complete
+     * @see URL
+     */
     public void handleButtonAction() {
         try {
             TextAnalyzerCore textAnalyzerCore = new TextAnalyzerCore("https://www.gutenberg.org/files/1065/1065-h/1065-h.htm");
@@ -38,6 +48,12 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
+    /**
+     * This method will load the table with the data.
+     * @param data The data to load into the table.
+     * @param limit The number of rows to load.
+     * @see DataModel
+     */
     private void loadTable(List<Map.Entry<String, Integer>> data, int limit) {
            int index = 0;
            this.tableView.getItems().clear();
@@ -51,6 +67,9 @@ public class MainController implements Initializable {
            }
 
     }
+    /**
+     * This method is called by the FXMLLoader when initialization is complete
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.data = FXCollections.observableArrayList();
@@ -58,6 +77,12 @@ public class MainController implements Initializable {
         this.wordColumn.setCellValueFactory(new PropertyValueFactory<>("Word"));
         this.frequencyColumn.setCellValueFactory(new PropertyValueFactory<>("Frequency"));
     }
+
+    /**
+     * This class is used to create the data model for the table.
+     * It will hold the word and the frequency.
+     * @see MainController
+     */
     public static class DataModel {
         private final SimpleStringProperty word;
         private final SimpleIntegerProperty frequency;
