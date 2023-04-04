@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class will test the TextAnalyzerCore class.
+ * @see TextAnalyzerCore
+ */
 public class TextAnalyzerCoreTest {
     TextAnalyzerCore textAnalyzerCore;
 
