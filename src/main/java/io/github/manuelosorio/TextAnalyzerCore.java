@@ -3,6 +3,7 @@ package io.github.manuelosorio;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.*;
 
 /**
@@ -10,23 +11,36 @@ import java.util.*;
  * It will read the text from a web page and analyze it.
  * @see TextAnalyzerGui
  */
-public class TextAnalyzerCore {
+public class TextAnalyzerCore{
 
+    private final Database db;
+    int poemId;
     private List<Map.Entry<String, Integer>> sortedList;
-
+    private boolean dataExists;
     private String[] words;
-
     /**
      * This is the constructor for the TextAnalyzerCore class.
      * @param webUrl The url to read the text from.
-     * @throws Exception
      */
     public TextAnalyzerCore(String webUrl) throws Exception {
+        this.db = new Database(Database.sqlUrl, Database.databaseName, Database.user, Database.password, false);
         this.readWebPage(webUrl);
-
     }
-    public TextAnalyzerCore() {}
+    public TextAnalyzerCore() {
+        this.db = new Database(Database.sqlUrl, Database.databaseName, Database.user, Database.password, false);
+    }
     private void readWebPage(String webURL) throws Exception {
+        Object poemCreationResults = this.db.executeQuery("INSERT INTO poem(url) VALUES('" + webURL + "')");
+        this.dataExists = poemCreationResults instanceof Integer && (int) poemCreationResults == 1062;
+
+        ResultSet rs = this.db.executeQuery("SELECT id FROM poem WHERE url = '" + webURL + "'");
+        if (rs != null && rs.next()) {
+            this.poemId = rs.getInt("id");
+            System.out.println("Poem ID: " + this.poemId);
+        } else {
+            throw new Exception("Unable to retrieve poem ID from the database");
+        }
+
         URL url = new URL(webURL);
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
         StringBuilder text = new StringBuilder();
@@ -54,12 +68,28 @@ public class TextAnalyzerCore {
     }
 
     private void setSortedList() {
-        HashMap<String, Integer> wordCount = new HashMap<>();
-        for (String word : this.words) {
-            wordCount.merge(word, 1, Integer::sum);
+
+        if (!this.dataExists) {
+            for (String word : this.words) {
+                try {
+                    this.db.executeQuery("INSERT INTO word(word, poem_id, frequency) VALUES('" + word + "', " + this.poemId
+                            + ", 1) ON DUPLICATE KEY UPDATE frequency = frequency + 1");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        this.sortedList = new ArrayList<>(wordCount.entrySet());
-        this.sortedList.sort((a, b) -> b.getValue().compareTo(a.getValue()));
+        this.sortedList = new ArrayList<>();
+        try {
+            ResultSet rs = this.db.executeQuery("SELECT word, frequency FROM word WHERE poem_id = "
+                    + this.poemId + " ORDER BY frequency DESC, word ASC");
+            while (rs.next()) {
+                this.sortedList.add(new AbstractMap.SimpleEntry<>(rs
+                        .getString("word"), rs.getInt("frequency")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Map.Entry<String, Integer>> getTopListEntities(int limit) {
