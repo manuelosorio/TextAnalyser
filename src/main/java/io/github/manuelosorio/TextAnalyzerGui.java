@@ -14,10 +14,6 @@ import java.io.IOException;
  */
 public class TextAnalyzerGui extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     /**
      * This method is called by the JavaFX runtime when the application is ready to start.
      * @param primaryStage The primary stage for this application.
