@@ -15,6 +15,11 @@ import java.util.Map;
 public class TextAnalyzerCoreTest {
     TextAnalyzerCore textAnalyzerCore;
 
+    TextAnalyzerCoreTest() {
+        new Database("jdbc:mysql://localhost:3306", "osorio_m_word_occurrences_database_test",
+                "root", "", true);
+    }
+
     @BeforeEach
     void setup(){
         this.textAnalyzerCore = new TextAnalyzerCore();
@@ -65,9 +70,15 @@ public class TextAnalyzerCoreTest {
         map.put("me",9);
         map.put("at",8);
         map.put("by",8);
-        map.put("with",8);
-        map.put("or",8);
+        map.put("from",8);
+        map.put("lenore",8);
         List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
+        list.sort((o1, o2) -> {
+            if (o1.getValue().equals(o2.getValue())) {
+                return o1.getKey().compareTo(o2.getKey());
+            }
+            return o2.getValue().compareTo(o1.getValue());
+        });
         List<Map.Entry<String, Integer>> actualList = this.textAnalyzerCore.getSortedList().subList(0, 20);
         assert(actualList.containsAll(list) && list.containsAll(actualList));
 
