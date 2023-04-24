@@ -50,6 +50,24 @@ public class Database {
         }
     }
 
+    public boolean isDatabaseCreated() {
+        try {
+            Connection connection = DriverManager.getConnection(sqlUrl, user, password);
+            ResultSet resultSet = connection.getMetaData().getCatalogs();
+            while (resultSet.next()) {
+                String databaseName = resultSet.getString(1);
+                if (databaseName.equals(Database.databaseName)) {
+                    return true;
+                }
+            }
+            resultSet.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     /**
      * Sets up the database schema, creating the necessary tables if they don't exist.
      */

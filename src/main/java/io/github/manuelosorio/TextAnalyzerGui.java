@@ -21,7 +21,7 @@ public class TextAnalyzerGui extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SetupView.fxml"));
             Parent parent = fxmlLoader.load();
             parent.getStylesheets().setAll("style.css");
             primaryStage.setTitle("Text Analyzer");
