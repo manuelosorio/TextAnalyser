@@ -1,9 +1,6 @@
 package io.github.manuelosorio;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,12 +18,10 @@ public class TextAnalyzerGui extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SetupView.fxml"));
-            Parent parent = fxmlLoader.load();
-            parent.getStylesheets().setAll("style.css");
-            primaryStage.setTitle("Text Analyzer");
-            primaryStage.setScene(new Scene(parent));
-            primaryStage.show();
+            ViewManager viewManager = new ViewManager(primaryStage);
+            viewManager.setView("SetupView.fxml",
+                    "style.css");
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

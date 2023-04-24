@@ -1,9 +1,12 @@
 package io.github.manuelosorio.controllers;
 
 import io.github.manuelosorio.Database;
+import io.github.manuelosorio.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 public class SetupController {
     @FXML
@@ -14,8 +17,9 @@ public class SetupController {
     public Button connectButton;
     public CheckBox initialiseCheckBox;
     public Label statusLabel;
-
+    private final ViewManager viewManager;
     public SetupController() {
+        this.viewManager = ViewManager.getInstance();
     }
 
     public void initialize() {
@@ -28,7 +32,13 @@ public class SetupController {
         if (db.isDatabaseCreated()) {
             statusLabel.setText("Database created successfully.");
             statusLabel.setStyle("-fx-text-fill: green");
-
+            CompletableFuture.delayedExecutor(2, java.util.concurrent.TimeUnit.SECONDS).execute(() -> {
+                try {
+                    viewManager.setView("MainView.FXML", "style.css");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         } else {
             statusLabel.setText("Database creation failed.");
             statusLabel.setStyle("-fx-text-fill: red");
