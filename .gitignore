@@ -45,3 +45,5 @@ build/
 ./logs/
 **.log
 **.zip
+**.jar
+/.idea/
