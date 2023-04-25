@@ -36,7 +36,6 @@ public class TextAnalyzerCore{
         ResultSet rs = this.db.executeQuery("SELECT id FROM poem WHERE url = '" + webURL + "'");
         if (rs != null && rs.next()) {
             this.poemId = rs.getInt("id");
-            System.out.println("Poem ID: " + this.poemId);
         } else {
             throw new Exception("Unable to retrieve poem ID from the database");
         }

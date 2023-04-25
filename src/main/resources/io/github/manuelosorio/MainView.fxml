@@ -3,7 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.manuelosorio.controllers.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.manuelosorio.controllers.MainController">
     <center>
         <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <columns>
@@ -13,12 +15,15 @@
         </TableView>
     </center>
    <bottom>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER" styleClass="toolbar">
-<!--        <items>-->
-<!--            <TextField maxWidth="350.0" minWidth="100.0" prefWidth="220.0" />-->
-<!--            <Region prefHeight="25.0" prefWidth="200.0" />-->
-            <Button onMouseClicked="#handleButtonAction" text="Get Top 20 Words" />
-<!--        </items>-->
-      </ToolBar>
+     <GridPane vgap="10" hgap="10" style="-fx-padding: 20px;">
+        <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label fx:id="statusLabel" text="Not Connected" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label text="Enter URL:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="urlField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label text="Enter Amount:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <TextField fx:id="amountField" text="20" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+        <Button onMouseClicked="#handleButtonAction" fx:id="button"
+                GridPane.columnIndex="0" GridPane.rowIndex="2"  GridPane.columnSpan="4"/>
+     </GridPane>
    </bottom>
 </BorderPane>

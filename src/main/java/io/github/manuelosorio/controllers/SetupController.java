@@ -2,6 +2,7 @@ package io.github.manuelosorio.controllers;
 
 import io.github.manuelosorio.Database;
 import io.github.manuelosorio.ViewManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -33,11 +34,13 @@ public class SetupController {
             statusLabel.setText("Database created successfully.");
             statusLabel.setStyle("-fx-text-fill: green");
             CompletableFuture.delayedExecutor(2, java.util.concurrent.TimeUnit.SECONDS).execute(() -> {
-                try {
-                    viewManager.setView("MainView.FXML", "style.css");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Platform.runLater(() -> {
+                    try {
+                        viewManager.setView("MainView.fxml", "style.css");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             });
         } else {
             statusLabel.setText("Database creation failed.");
