@@ -71,7 +71,7 @@ public class MainController implements Initializable {
             TextAnalyzerCore textAnalyzerCore = new TextAnalyzerCore(urlField.getText());
             List<Map.Entry<String, Integer>> sortedList = textAnalyzerCore.getSortedList();
             this.loadTable(sortedList, Integer.parseInt(amountField.getText()));
-git             String url = urlField.getText().length() > 40
+            String url = urlField.getText().length() > 40
                     ? urlField.getText().substring(0, 40) + "..." : urlField.getText();
             this.statusLabel.setText("Retrieved data from: " + url );
             this.statusLabel.setStyle("-fx-text-fill: green");
