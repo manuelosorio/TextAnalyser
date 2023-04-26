@@ -20,15 +20,22 @@ public class TextAnalyzerCore{
     private String[] words;
     /**
      * This is the constructor for the TextAnalyzerCore class.
-     * @param webUrl The url to read the text from.
+     * It initializes the database and reads the text from the provided web URL.
+     * @param webUrl The URL to read the text from.
+     * @throws Exception If there is an issue reading the web page or retrieving the poem ID from the database.
      */
     public TextAnalyzerCore(String webUrl) throws Exception {
         this.db = new Database(Database.sqlUrl, Database.databaseName, Database.user, Database.password, false);
         this.readWebPage(webUrl);
     }
+
+    /**
+     * This constructor initializes the TextAnalyzerCore class with the default database settings.
+     */
     public TextAnalyzerCore() {
         this.db = new Database(Database.sqlUrl, Database.databaseName, Database.user, Database.password, false);
     }
+
     private void readWebPage(String webURL) throws Exception {
         Object poemCreationResults = this.db.executeQuery("INSERT INTO poem(url) VALUES('" + webURL + "')");
         this.dataExists = poemCreationResults instanceof Integer && (int) poemCreationResults == 1062;
@@ -36,7 +43,6 @@ public class TextAnalyzerCore{
         ResultSet rs = this.db.executeQuery("SELECT id FROM poem WHERE url = '" + webURL + "'");
         if (rs != null && rs.next()) {
             this.poemId = rs.getInt("id");
-            System.out.println("Poem ID: " + this.poemId);
         } else {
             throw new Exception("Unable to retrieve poem ID from the database");
         }
@@ -53,7 +59,12 @@ public class TextAnalyzerCore{
 
         this.setSortedList();
     }
-
+    /**
+     * Strips away all the unwanted parts of the text, such as HTML tags, entities, and non-word characters,
+     * and splits the resulting text into an array of words.
+     * @param text A StringBuilder containing the raw text from the web page.
+     * @return An array of words after stripping away unwanted parts of the text.
+     */
     private String[] strip(StringBuilder text) {
         this.words = text.toString().toLowerCase()
                 .split("<h1>")[1] // Ignores the Text Before the title
@@ -66,7 +77,11 @@ public class TextAnalyzerCore{
                 .split("\\s+");
         return words;
     }
-
+    /**
+     * Sets the sorted list of words and their frequencies. If the data does not already exist in the database,
+     * it inserts the words and their frequencies into the database. Then, it retrieves the sorted list of words
+     * and their frequencies from the database.
+     */
     private void setSortedList() {
 
         if (!this.dataExists) {
@@ -91,14 +106,26 @@ public class TextAnalyzerCore{
             e.printStackTrace();
         }
     }
-
+    /**
+     * Returns a list of the top 'limit' words and their frequencies.
+     * @param limit The number of top words to return.
+     * @return A list of the top 'limit' words and their frequencies.
+     */
     public List<Map.Entry<String, Integer>> getTopListEntities(int limit) {
         return this.sortedList.subList(0, limit);
     }
+    /**
+     * Returns the sorted list of words and their frequencies.
+     * @return A list of words and their frequencies, sorted by frequency and then alphabetically.
+     */
     public List<Map.Entry<String, Integer>> getSortedList() {
         return sortedList;
     }
-
+    /**
+     * Sets the URL for the TextAnalyzerCore class and reads the web page content.
+     * @param webUrl The URL to read the text from.
+     * @throws Exception If there is an issue reading the web page or retrieving the poem ID from the database.
+     */
     public void setUrl(String webUrl) throws Exception {
         this.readWebPage(webUrl);
     }

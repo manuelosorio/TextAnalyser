@@ -45,3 +45,8 @@ build/
 ./logs/
 **.log
 **.zip
+**.jar
+/.idea/
+/screenshots/
+/screenshots/*.png
+*.mp4
