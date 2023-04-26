@@ -47,3 +47,5 @@ build/
 **.zip
 **.jar
 /.idea/
+./screenshots
+*.mp4
