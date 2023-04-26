@@ -17,7 +17,7 @@
    <bottom>
      <GridPane vgap="10" hgap="10" style="-fx-padding: 20px;">
         <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <Label fx:id="statusLabel" text="Not Connected" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label fx:id="statusLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="2" />
         <Label text="Enter URL:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <TextField fx:id="urlField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <Label text="Enter Amount:" GridPane.columnIndex="2" GridPane.rowIndex="1" />

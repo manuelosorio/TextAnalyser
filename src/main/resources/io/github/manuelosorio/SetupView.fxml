@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -15,7 +14,7 @@
           <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
           <Label text="Enter the database name:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
           <TextField fx:id="databaseField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-          <Label text="Needs Initialisation?:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+          <Label text="Needs Initialization?:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
           <CheckBox fx:id="initialiseCheckBox" GridPane.columnIndex="1" GridPane.rowIndex="4" />
           <Button fx:id="connectButton" onMouseClicked="#handleButtonAction" text="Connect" GridPane.columnIndex="0" GridPane.rowIndex="5" />
           <Label fx:id="statusLabel" text="Status: Not Connected" GridPane.columnIndex="0" GridPane.rowIndex="6" />
