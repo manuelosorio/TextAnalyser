@@ -47,6 +47,6 @@ build/
 **.zip
 **.jar
 /.idea/
-./screenshots/
-./screenshots/**/
+/screenshots/
+/screenshots/*.png
 *.mp4

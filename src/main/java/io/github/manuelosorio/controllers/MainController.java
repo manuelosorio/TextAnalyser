@@ -80,6 +80,16 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    /**
+     * This method updates the button text when the amount field is changed.
+     * It will also check if the amount field is empty or not a number.
+     * If the amount field is empty or not a number, it will not update the button text.
+     * If the amount field is less than 1, it will set the amount field to 1.
+     *
+     * @see TextField
+     * @see Button
+     */
     public void onAmountChange() {
         if (this.amountField.getText().isEmpty()) {
             return;
@@ -99,6 +109,10 @@ public class MainController implements Initializable {
 
     /**
      * This method will load the table with the data.
+     * It will clear the table and load the data into the table.
+     * It will also check if the limit is greater than the data size.
+     * If the limit is greater than the data size, it will only load the data size.
+     *
      * @param data The data to load into the table.
      * @param limit The number of rows to load.
      * @see DataModel
@@ -119,6 +133,13 @@ public class MainController implements Initializable {
     }
     /**
      * This method is called by the FXMLLoader when initialization is complete
+     * It will initialize the table and set the button text.
+     * It will also add a listener to the amount field.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     * @see URL
+     * @see ResourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -133,6 +154,8 @@ public class MainController implements Initializable {
     /**
      * This class is used to create the data model for the table.
      * It will hold the word and the frequency.
+     * It will also have getters for the word and frequency.
+     *
      * @see MainController
      */
     public static class DataModel {
