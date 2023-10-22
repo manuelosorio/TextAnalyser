@@ -1,6 +1,7 @@
 package io.github.manuelosorio.controllers;
 
 import io.github.manuelosorio.TextAnalyzerCore;
+import io.github.manuelosorio.logger.LoggerAbstraction;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -23,6 +24,17 @@ import java.util.ResourceBundle;
  */
 
 public class MainController implements Initializable {
+
+    private final LoggerAbstraction logger;
+
+    @FXML
+    public TextField amountField;
+    @FXML
+    public TextField urlField;
+    @FXML
+    public Label statusLabel;
+    @FXML
+    public Button button;
     @FXML
     public TextField amountField;
     @FXML
@@ -40,6 +52,7 @@ public class MainController implements Initializable {
     private ObservableList<DataModel> data;
 
     public MainController() {
+        this.logger = new LoggerAbstraction(MainController.class.getName());
     }
 
     /**
@@ -77,7 +90,7 @@ public class MainController implements Initializable {
             this.statusLabel.setStyle("-fx-text-fill: green");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            this.logger.severe(e.getMessage());
         }
     }
 

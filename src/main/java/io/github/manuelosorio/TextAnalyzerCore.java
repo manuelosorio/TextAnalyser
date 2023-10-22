@@ -1,5 +1,6 @@
 package io.github.manuelosorio;
 
+import io.github.manuelosorio.logger.LoggerAbstraction;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -18,6 +19,8 @@ public class TextAnalyzerCore{
     private List<Map.Entry<String, Integer>> sortedList;
     private boolean dataExists;
     private String[] words;
+
+    private final LoggerAbstraction logger;
     /**
      * This is the constructor for the TextAnalyzerCore class.
      * It initializes the database and reads the text from the provided web URL.
@@ -25,6 +28,7 @@ public class TextAnalyzerCore{
      * @throws Exception If there is an issue reading the web page or retrieving the poem ID from the database.
      */
     public TextAnalyzerCore(String webUrl) throws Exception {
+        this.logger = new LoggerAbstraction(TextAnalyzerCore.class.getName());
         this.db = new Database(Database.sqlUrl, Database.databaseName, Database.user, Database.password, false);
         this.readWebPage(webUrl);
     }
@@ -33,6 +37,7 @@ public class TextAnalyzerCore{
      * This constructor initializes the TextAnalyzerCore class with the default database settings.
      */
     public TextAnalyzerCore() {
+        this.logger = new LoggerAbstraction(TextAnalyzerCore.class.getName());
         this.db = new Database(Database.sqlUrl, Database.databaseName, Database.user, Database.password, false);
     }
 
@@ -44,6 +49,7 @@ public class TextAnalyzerCore{
         if (rs != null && rs.next()) {
             this.poemId = rs.getInt("id");
         } else {
+            this.logger.severe("Unable to retrieve poem ID from the database");
             throw new Exception("Unable to retrieve poem ID from the database");
         }
 
@@ -90,7 +96,7 @@ public class TextAnalyzerCore{
                     this.db.executeQuery("INSERT INTO word(word, poem_id, frequency) VALUES('" + word + "', " + this.poemId
                             + ", 1) ON DUPLICATE KEY UPDATE frequency = frequency + 1");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    this.logger.severe("Unable to insert word into database: " + e.getMessage());
                 }
             }
         }
@@ -103,7 +109,7 @@ public class TextAnalyzerCore{
                         .getString("word"), rs.getInt("frequency")));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            this.logger.severe("Unable to retrieve sorted list from database: " + e.getMessage());
         }
     }
     /**

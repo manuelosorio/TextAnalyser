@@ -1,6 +1,9 @@
 package io.github.manuelosorio;
 
+import io.github.manuelosorio.logger.LoggerAbstraction;
 import javafx.application.Application;
+
+import java.util.logging.Level;
 
 /**
  * The Main class serves as the entry point for the Text Analyzer application.
@@ -12,6 +15,8 @@ import javafx.application.Application;
  */
 public class Main {
     public static void main(String[] args) {
+        LoggerAbstraction logger = new LoggerAbstraction(Main.class.getName());
+        logger.info("Application launched");
         Application.launch(TextAnalyzerGui.class, args);
 
     }

@@ -2,6 +2,7 @@ package io.github.manuelosorio.controllers;
 
 import io.github.manuelosorio.Database;
 import io.github.manuelosorio.ViewManager;
+import io.github.manuelosorio.logger.LoggerAbstraction;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,6 +21,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public class SetupController {
 
+    private final LoggerAbstraction logger;
     private final ViewManager viewManager;
     @FXML
     public TextField urlField;
@@ -30,6 +32,7 @@ public class SetupController {
     public CheckBox initialiseCheckBox;
     public Label statusLabel;
     public SetupController() {
+        this.logger = new LoggerAbstraction(SetupController.class.getName());
         this.viewManager = ViewManager.getInstance();
     }
     /**
@@ -38,6 +41,7 @@ public class SetupController {
      */
     public void initialize() {
         connectButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::handleButtonAction);
+        this.logger.info("SetupController initialized");
     }
 
     /**
@@ -59,13 +63,14 @@ public class SetupController {
                     try {
                         viewManager.setView("MainView.fxml", "style.css");
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        this.logger.severe("Failed to load MainView.fxml. " + e.getMessage());
                     }
                 });
             });
         } else {
             statusLabel.setText("Database creation failed.");
             statusLabel.setStyle("-fx-text-fill: red");
+            this.logger.severe("Database creation failed.");
         }
 
 
