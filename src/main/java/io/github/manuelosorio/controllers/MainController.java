@@ -36,6 +36,14 @@ public class MainController implements Initializable {
     @FXML
     public Button button;
     @FXML
+    public TextField amountField;
+    @FXML
+    public TextField urlField;
+    @FXML
+    public Label statusLabel;
+    @FXML
+    public Button button;
+    @FXML
     private TableView<DataModel> tableView;
     @FXML
     private TableColumn<DataModel, String> wordColumn;
