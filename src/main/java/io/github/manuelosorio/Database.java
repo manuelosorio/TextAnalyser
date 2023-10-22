@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.manuelosorio.logger.LoggerAbstraction;
+
 /**
  * The Database class is responsible for establishing a connection to a MySQL database,
  * initializing the database schema if necessary, and executing SQL queries.
@@ -17,6 +19,8 @@ public class Database {
     static String password;
     static boolean needsInitialization;
 
+    LoggerAbstraction logger;
+
     /**
      * Constructs a Database instance and establishes a connection to the MySQL server.
      * Initializes the database schema if the needsInitialization parameter is set to true.
@@ -28,6 +32,7 @@ public class Database {
      * @param needsInitialization if true, the database schema will be initialized
      */
     public Database(String sqlUrl, String databaseName, String user, String password, boolean needsInitialization) {
+        this.logger = new LoggerAbstraction(Database.class.getName());
         Database.sqlUrl = sqlUrl;
         Database.databaseName = databaseName;
         Database.user = user;
@@ -37,16 +42,18 @@ public class Database {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                logger.severe("Unable to load MySQL JDBC driver" + e.getMessage());
             }
             if (needsInitialization) {
                 this.connection = DriverManager.getConnection(sqlUrl, user, password);
                 this.setupDatabase();
+                this.logger.info("Database initialized");
             } else {
                 this.connection = DriverManager.getConnection(sqlUrl + "/" + databaseName, user, password);
+                this.logger.info("Database connected");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            this.logger.severe("Unable to connect to MySQL server" + e.getMessage());
         }
     }
 
@@ -63,7 +70,7 @@ public class Database {
             resultSet.close();
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            this.logger.severe("Unable to connect to MySQL server. " + e.getMessage());
         }
         return false;
     }
@@ -94,8 +101,9 @@ public class Database {
                 """);
         try {
             this.executeQuery(queries);
+            this.logger.info("Database schema initialized");
         } catch (SQLException e) {
-            e.printStackTrace();
+            this.logger.severe("Unable to setup database. " + e.getMessage());
         }
     }
     /**
@@ -120,22 +128,25 @@ public class Database {
             Statement statement = this.getStatement();
             boolean hasResultSet = statement.execute(query);
             if (hasResultSet) {
+                this.logger.info("Query executed successfully. " + query);
                 return (E) statement.getResultSet();
             }
         } catch (SQLException e) {
             switch (e.getErrorCode()) {
                 case 1062 -> {
-                    System.out.println("Duplicate entry");
+                    this.logger.warning("Duplicate entry. " + e.getMessage());
                     return (E) Integer.valueOf(e.getErrorCode());
                 }
                 case 1050 -> {
-                    System.out.println("Table already exists");
+                    this.logger.warning("Table already exists. " + e.getMessage());
+                    return (E) Integer.valueOf(e.getErrorCode());
                 }
                 default -> {
-                    e.printStackTrace();
+                    this.logger.severe("Unable to execute query. " + e.getMessage());
                 }
             }
         }
+        this.logger.info("Query executed successfully. " + query);
         return null;
     }
 
@@ -153,13 +164,13 @@ public class Database {
             } catch (SQLException e) {
                 switch (e.getErrorCode()) {
                     case 1062 -> {
-                        System.out.println("Duplicate entry");
+                        this.logger.warning("Duplicate entry. " + e.getMessage());
                     }
                     case 1050 -> {
-                        System.out.println("Table already exists");
+                        this.logger.warning("Table already exists. " + e.getMessage());
                     }
                     default -> {
-                        e.printStackTrace();
+                        this.logger.severe("Unable to execute query. " + e.getMessage());
                     }
                 }
             }
@@ -173,6 +184,7 @@ public class Database {
      * @throws SQLException if a database access error occurs
      */
     public Statement getStatement() throws SQLException {
+        this.logger.info("Creating new statement");
         return this.getConnection().createStatement();
     }
 
