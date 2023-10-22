@@ -1,3 +1,4 @@
 module:io.github.manuelosorio
 io.github.manuelosorio
 io.github.manuelosorio.controllers
+io.github.manuelosorio.logger
