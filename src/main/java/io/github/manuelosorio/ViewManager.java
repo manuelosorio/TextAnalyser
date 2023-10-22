@@ -1,5 +1,6 @@
 package io.github.manuelosorio;
 
+import io.github.manuelosorio.logger.LoggerAbstraction;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +16,8 @@ import java.io.IOException;
  *
  */
 public class ViewManager {
+
+    private LoggerAbstraction logger = new LoggerAbstraction(ViewManager.class.getName());
 
     /**
      * A static ViewManager instance used to implement the singleton pattern.
@@ -33,6 +36,7 @@ public class ViewManager {
         instance = this;
         this.stage = primaryStage;
         this.stage.setTitle("Text Analyzer");
+        this.logger.info("ViewManager initialized");
     }
 
     /**
@@ -49,6 +53,7 @@ public class ViewManager {
         parent.getStylesheets().setAll(StyleSheet);
         this.stage.setScene(new Scene(parent));
         this.stage.show();
+        this.logger.info("View set to " + viewFile);
     }
 
     /**

@@ -1,9 +1,12 @@
 package io.github.manuelosorio;
 
+import com.mysql.cj.log.Log;
+import io.github.manuelosorio.logger.LoggerAbstraction;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * TextAnalyzerGui is the main GUI class for the Text Analyzer application.
@@ -15,6 +18,8 @@ import java.io.IOException;
  * @see io.github.manuelosorio.ViewManager
  */
 public class TextAnalyzerGui extends Application {
+
+    private LoggerAbstraction logger = new LoggerAbstraction(TextAnalyzerGui.class.getName());
 
     /**
      * Opens the initial view of the application using the ViewManager.
@@ -31,6 +36,7 @@ public class TextAnalyzerGui extends Application {
                     "style.css");
 
         } catch (IOException e) {
+            this.logger.severe("Failed to initialize application: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
